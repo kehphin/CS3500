@@ -1,0 +1,131 @@
+Project 3, Spring 2010
+
+Box Office
+
+In honor of the upcoming Oscars, a local movie theater will be running 3 popular movies that have been nominated for Best Picture -- Avatar, The Blind Side, and Up. The movies will run from March 1 - May 15.
+
+Tickets will be priced as shown in the table below on Monday - Thursday. There is a $3 surcharge on Friday - Sunday. Students receive a $2 discount on Regular Price tickets but NOT on Matinee tickets.
+
+Movie           	Weekday Matinee Price	  Weekday Regular Price
+Avatar                  	$8	                  $10
+The Blind Side          	$6                  	$8
+Up	                      $6                  	$8
+
+Requirements
+
+You have been hired by the movie theater to write a Box Office program to handle ticket sales for the special Oscar showing. Your program must be named BoxOffice. It must display a header that lists the name of the application -- you may name it as you like (ours is named "Oscar Movie Madness") -- and provides instructions about using the program. For example,
+              
+              Welcome to Oscar Movie Madness!
+When prompted, please enter the movie you would like see, the
+date, whether or not it is a matinee, and the number of adult
+and student tickets you would like to purchase.
+
+The user should be prompted for the following input values:
+
+movie name (case-insensitive)
+month
+day
+matinee (y/n)
+number of adult tickets
+number of student tickets
+
+The program should then output the total cost of the tickets.
+
+For example,
+
+Movie (Avatar, The Blind Side, Up): AVATAR
+Month: 4
+Day: 21
+Matinee (y,n): N
+Number of adult tickets: 2
+Number of student tickets: 2
+Cost of Tickets: $36
+
+Error Handling
+
+If the user enters an invalid value for one of the input categories, the program should print "Invalid input" and quit. HINT: The statement System.exit(1); will cause the program to quit with a status of 1 indicating an error condition.
+
+NOTE that you do not need to handle the situation where the user enters something other than an integer for month, day, or number of tickets. We will learn to handle this later in the semester.
+
+Here are some examples of handling invalid input:
+
+Movie (Avatar, The Blind Side, Up): avaatar
+Invalid input
+
+Movie (Avatar, The Blind Side, Up): up
+Month: 4
+Day: 31
+Invalid input
+
+Movie (Avatar, The Blind Side, Up): the blind side
+Month: 3
+Day: 31
+Matinee (y,n): a
+Invalid input
+
+Movie (Avatar, The Blind Side, Up): up
+Month: 4
+Day: 2
+Matinee (y,n): n
+Number of adult tickets: -5
+Invalid input
+
+
+Design
+
+The program must contain a method that interfaces with the user. This method will prompt the user for their input, gather the input, and provide the results (positive or negative) to the user. This method should be called from your main method. For example,
+
+
+public static void main(String [] args) {
+   userInterface();
+}
+
+The program must also contain and use completed versions of the following static methods:
+
+//Return true if the date is a valid date between March 1 and May 15
+//Return false otherwise 
+public static boolean isValidDate (int month, int day){
+
+}
+
+//This method must use Zeller's algorithm described below.
+//Return true if date falls on Monday through Thursday
+//Return false if date falls on Friday through Sunday
+//You may assume the month and day are valid
+public static boolean isWeekday (int month, int day) {
+
+}
+
+//Return cost of tickets or 
+//-1 if movie and/or date is/are invalid or number of tickets < 0
+public static int getCost (String movie, int month, int day, boolean isMatinee,
+             int numberOfAdultTickets, int numberOfStudentTickets) {
+
+}
+
+***getCost must work correctly regardless of when/where it is called. It must return values as stated in the method comments--return cost of tickets or -1 for invalid input. While within your program it is likely you will never reach getCost with invalid input due to checking the input as it is entered by the user, please write getCost to return -1 if invalid input is given. This is important when we are white box testing the getCost method.***
+
+Zeller's Algorithm
+
+Zeller's algorithm may be used to determine the day of the week for a given month, day, and year. Using m for month, d for day, and y for year, the day of the week (0 for Sunday, 1 for Monday, 2 for Tuesday, etc.) may be calculated as follows -- w, x, and z are just extra variables:
+
+w = y - (14 - m) / 12
+
+x = w + w / 4 - w / 100 + w / 400
+
+z = m +  12 * ((14 - m) / 12) - 2
+
+day of week = (d + x + (31 * z) / 12) % 7
+
+For example, February 14, 2010 falls on Sunday:
+
+
+w = 2010 - (14 - 2) / 12 = 2009
+
+x = 2009 + 2009 / 4 - 2009 / 100 + 2009 / 400 = 2496
+
+z = 2 + 12 * ((14 - 2) / 12) - 2 = 12
+
+day of week = (14 + 2496 + (31 * 12) / 12) % 7 = 0
+
+The equations above were based on Zeller's algorithm as found in Introduction to Programming in Java by Robert Sedgewick and Kevin Wayne.
